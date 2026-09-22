@@ -25,7 +25,7 @@ contains the answer.
 **Why this target:**
 <!-- e.g. "One of my questions is about a topic only two documents mention, so
      I expect that one to be hard." -->
-
+I chose 4 of 5 because my questions cover different topics across the campus_life corpus, and some questions may be harder if there are fewer documents about that topic.
 ---
 
 ## 2. Every answer names a source
@@ -35,7 +35,7 @@ Every answer the system produces names at least one source document.
 **Why this target:**
 <!-- Why all five and not four? What about your setup makes that achievable —
      or what would have to go wrong for it not to be? -->
-
+I chose every answer because the system is designed to answer questions from the provided documents, so each answer should be traceable back to at least one source.
 ---
 
 ## 3. The relevance gate stops out-of-corpus questions
@@ -53,11 +53,16 @@ in at least 4 of 5 tries.
 <!-- What did your distances look like when you set the cutoff in Milestone 4?
      Was there a clean gap, or did the two groups overlap? -->
 
+I chose 4 of 5 because the system should reject most questions that are clearly outside the campus_life corpus, while allowing for one possible retrieval mistake.
+
 ---
 
 ## 4. Something about your chunks
 
+At least 4 of 5 sampled chunks should contain a complete, self-contained piece of information without cutting a sentence in half.
+
 <!-- YOU WRITE THIS ONE.
+
 
      How would you know if your chunks were the right size? Name something
      countable or observable.
@@ -73,7 +78,7 @@ in at least 4 of 5 tries.
 
 **Why this target:**
 
-
+Most of the documents in my campus_life corpus are short and focused on one topic, so I want each chunk to preserve enough context to answer a question without splitting the main information across chunks.
 
 ---
 
@@ -86,13 +91,14 @@ in at least 4 of 5 tries.
      handles badly, about source attribution being correct rather than merely
      present — anything, as long as it names a number or an observable
      outcome. -->
-
-
+The indexing process should complete in under 5 minutes.
 
 **Why this target:**
 
-
-
+I chose this target because the indexing process took a long time to run.
+When I first ran the indexing process, it never completed and my Mac
+killed the process, so I want to make sure the system can process the
+corpus without causing the same problem.
 ---
 
 <!-- ─────────────────────────────────────────────────────────────────────────
