@@ -166,8 +166,13 @@ The five in-scope questions had best distances ranging from 0.205 to 0.333. The 
      Milestone 5. -->
 
 **1.**
+Chunking
 
+I asked AI what some different chunking approaches were. After reading the documentation and looking at my corpus, I found that the documents were usually very short around 1-2 sentence and each document focused on a different toopic. Because of this, I decided it would be better to keep each document as one chunk instead of splitting them further.
 **2.**
+Retrieval
+
+I asked AI how I should evaluate whether my relevance cutoff was working correctly. It suggested comparing the best retrieval distances from questions that were in the corpus with questions that were outside the corpus. I ran the evaluation myself and found that my in-scope questions had distances from 0.205 to 0.333, while the out-of-scope questions had distances from 0.825 to 0.934. Based on those results, I decided to keep the default cutoff of 0.6 instead of changing it.
 
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
