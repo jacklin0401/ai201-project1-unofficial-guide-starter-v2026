@@ -55,7 +55,7 @@ I chose to keep each document as one chunk because the `campus_life` documents a
 
      Milestone 3. -->
 
-**Chunk 1** —  source: `admin_add_drop_deadline.txt#0:` — produced by: `chunker.py::split_documents`
+**Chunk 1** —  source: `admin_add_drop_deadline.txt` — produced by: `chunker.py::split_documents`
 
 ```
 On the add/drop deadline
@@ -63,7 +63,7 @@ On the add/drop deadline
 You can add a course through the end of the second week. Dropping is a longer window — through the end of week six — but a drop after week two shows as a W on your transcript. Nothing anywhere on the registrar's site says this plainly, and students find out from each other.
 ```
 
-**Chunk 2** — `source:course_biol_160.txt#0` — produced by: `chunker.py::split_documents`
+**Chunk 2** — `source:course_biol_160.txt` — produced by: `chunker.py::split_documents`
 
 ```
 BIOL 160 Cell Biology
@@ -75,7 +75,7 @@ Expect 9 to 11 hours a week, the heaviest first-year course by reputation.
 The one piece of advice: the unit tests come fast, roughly every three weeks; falling behind once is very hard to recover from.
 ```
 
-**Chunk 3** — source: `course_hist_118_workload.txt#0` — produced by: `chunker.py::split_documents`
+**Chunk 3** — source: `course_hist_118_workload.txt` — produced by: `chunker.py::split_documents`
 
 ```
 Workload for HIST 118 Modern World History
@@ -85,7 +85,7 @@ People keep asking so: a lot of reading, about 120 pages a week, but no problem 
 It's front-loaded — the first month is heavier than the rest, partly because you're learning the format.
 ```
 
-**Chunk 4** — source: `dining_pellew_dining_hall_followup.txt#0` — produced by: `chunker.py::split_documents`
+**Chunk 4** — source: `dining_pellew_dining_hall_followup.txt` — produced by: `chunker.py::split_documents`
 
 ```
 Re: Pellew Dining Hall
@@ -95,7 +95,7 @@ Adding to what people have said about Pellew Dining Hall. The wait figure of 12 
 Also worth saying: the furthest hall from anywhere, next to the athletics centre. Nobody tells you this at orientation.
 ```
 
-**Chunk 5** — source: `housing_innisfree_hall.txt#0 ` — produced by: `chunker.py::split_documents`
+**Chunk 5** — source: `housing_innisfree_hall.txt` — produced by: `chunker.py::split_documents`
 
 ```
 Innisfree Hall — what it's actually like
@@ -118,13 +118,19 @@ without reading what came before or after?
      visible. Milestone 4. -->
 
 **Question:**
+How are juniors and seniors prioritized in the housing lottery?
 
 **Answer:**
 
 ```
+No, the housing lottery is not completely random in the way most people assume. While rising sophomores get a number drawn at random, juniors and seniors are ordered by accumulated credit hours first, and only use random tie-breaks.
 ```
 
 **My relevance cutoff:**
+
+0.6
+
+The five in-scope questions had best distances ranging from 0.205 to 0.333. The five out-of-scope questions had best distances ranging from 0.825 to 0.934. There was a clear gap between the two groups, so I kept the default cutoff of 0.6 because it falls between the highest in-scope distance and the lowest out-of-scope distance.
 
 <!-- The number you set in config.py, and how you got there.
 
@@ -137,7 +143,16 @@ without reading what came before or after?
 
 | Question | In corpus? | Best distance |
 |---|---|---|
-|  |  |  |
+| How are juniors and seniors prioritized in the housing lottery? | Yes | 0.205 |
+| What happens if a student wants to add or drop a course after the deadline? | Yes | 0.292 |
+| does work-study job count toward your financial aid the same way a nomral non work study job does? | Yes | 0.248 |
+| What is the workload like for CS 210? | Yes | 0.276 |
+| What are the laundry conditions at Aldridge Hall? | Yes | 0.333 |
+| What is the capital of Mongolia? | No | 0.825 |
+| How do I change the oil in a diesel engine? | No | 0.934 |
+| Who won the 1994 World Cup? | No | 0.886 |
+| What is the recommended dosage of ibuprofen for a headache? | No | 0.844 |
+| How do I write a for loop in Rust? | No | 0.896 |
 
 ## How I Used AI
 
