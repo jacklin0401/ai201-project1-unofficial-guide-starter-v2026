@@ -200,13 +200,18 @@ I asked AI how I should evaluate whether my relevance cutoff was working correct
      Milestone 1. -->
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
-|---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 | 4 of 5 | 4 of 5 | 4 of 5 | MET |
-| 2. Every answer names a source | 5 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
-| 3. Gate stops out-of-corpus questions | 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
-| 4. Sampled chunks are complete and self-contained | 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
-| 5. Indexing completes in under 5 minutes | Under 5 minutes | 3:20.04 | 3:20.
 
+|---|---|---|---|---|---|
+
+| 1. Retrieved chunk contains the answer | 4 of 5 | 4 of 5 | 4 of 5 | 4 of 5 | MET |
+
+| 2. Every answer names a source | 5 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+
+| 3. Gate stops out-of-corpus questions | 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+
+| 4. Sampled chunks are complete and self-contained | 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+
+| 5. Indexing completes in under 5 minutes | Under 5 minutes | 3:20.04 | N/A | N/A | MET |
 <!-- Underneath, paste the REAL output for each criterion from one of your
      runs — the actual text your system produced, not a description of it.
      Name the file and function that produced it. -->
@@ -224,11 +229,11 @@ I asked AI how I should evaluate whether my relevance cutoff was working correct
 
 | # | Criterion | Verdict | How I decided |
 |---|---|---|---|
-| 1 |  |  |  |
-| 2 |  |  |  |
-| 3 |  |  |  |
-| 4 |  |  |  |
-| 5 |  |  |  |
+| 1 | Retrieved chunk contains the answer | MET | 4 of 5 test questions had a retrieved chunk containing the answer in all three runs. The add/drop question was the one exception. |
+| 2 | Every answer names a source | MET | All 15 answers across the three runs named at least one source document. |
+| 3 | Gate stops out-of-corpus questions | MET | The gate refused all 5 out-of-scope questions, exceeding the target of 4 of 5. |
+| 4 | Sampled chunks are complete and self-contained | MET | I checked the top-ranked retrieved chunk for each of the five test questions. All 5 were complete and self-contained. |
+| 5 | Indexing completes in under 5 minutes | MET | The indexing process completed in 3:20.04, which is under the 5-minute target. |
 
 ## Diagnoses
 
@@ -250,14 +255,21 @@ I asked AI how I should evaluate whether my relevance cutoff was working correct
 
      Milestone 3. -->
 
+The only criterion that was close to its target was Criterion 1. The add/drop question did not retrieve a chunk that directly contained the answer. The retrieval stage returned `admin_add_drop_deadline.txt`, which explains the add/drop deadlines, but it does not explain what happens after those deadlines. Increasing `TOP_K` from 5 to 8 also retrieved `admin_withdrawal_deadline.txt`, but that document discusses withdrawal through week ten rather than directly answering what happens after the add/drop deadline.
+
+The other four criteria were met. There was no evidence of a loading, chunking, embedding, or generation problem causing a criterion miss.
+
+
 ## The Improvement
 
 **What I changed:**
-
+I changed TOP_K in config.py from 5 to 8. This means the retrieval stage returns up to 8 chunks instead of 5 for each question.
 **Why I picked it:**
 
 <!-- Connect it to a specific diagnosis above in one sentence. If you can't,
      you picked a fix because it sounded impressive. -->
+
+Criterion 1 was the only criterion with a retrieval-related limitation. I increased TOP_K to give the system more retrieved information and a better chance of finding a chunk that directly contains the answer.
 
 ### Run Log — After
 
@@ -266,11 +278,11 @@ I asked AI how I should evaluate whether my relevance cutoff was working correct
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunk contains the answer | 4 of 5 | 4 of 5 | 4 of 5 | 4 of 5 | MET |
+| 2. Every answer names a source | 5 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+| 4. Sampled chunks are complete and self-contained | 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
+| 5. Indexing completes in under 5 minutes | Under 5 minutes | 3:20.04* | N/A | N/A | MET |
 
 **Did it help?**
 
@@ -280,6 +292,8 @@ I asked AI how I should evaluate whether my relevance cutoff was working correct
      tell.
 
      Milestone 4. -->
+No measurable improvement was observed. The before and after evaluation produced the same results for all five criteria. Increasing `TOP_K` from 5 to 8 did not change the best retrieval distance or the criterion results. The add/drop question remained the same limitation.
+
 
 ## What's Still Broken
 
@@ -290,6 +304,9 @@ I asked AI how I should evaluate whether my relevance cutoff was working correct
      not.
 
      Milestone 5. -->
+Criterion 1 is still the main limitation. The add/drop question retrieves information about the deadlines, but the documents do not directly explain what happens after the deadlines. The TOP_K change did not solve this because the additional retrieved document was about withdrawal rather than the specific missing information.
+
+I stopped after testing one improvement, as required by the assignment. If I continued, I would inspect the corpus for whether the missing answer exists at all and then consider a more targeted retrieval or corpus improvement.
 
 ## What I'd Do Differently
 
@@ -297,3 +314,6 @@ I asked AI how I should evaluate whether my relevance cutoff was working correct
      differently, and why?
 
      Milestone 5. -->
+I would make Criterion 1 more precise about what counts as the answer being present in a retrieved chunk. The add/drop question showed that a document can contain related information about deadlines without actually containing the answer to the question being asked.
+
+I would also define the sampling method for Criterion 4 more explicitly in the criterion itself, such as checking the top-ranked chunk for each of the five test questions. This would make the measurement easier to reproduce.
